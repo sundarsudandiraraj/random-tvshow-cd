@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: random-tvshow-app
+  name: random-tvshow-app
+  namespace: nextjs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: random-tvshow-app
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: random-tvshow-app
+    spec:
+      containers:
+        - image: sundarsudandiraraj/random-tvshow-node-app:latest
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/healthz
+              port: 3000
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
+            initialDelaySeconds: 60
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/healthz
+              port: 3000
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
+            initialDelaySeconds: 30
+          name: random-tvshow-app
+          env:
+            - name: REACT_APP_ENVIRONMENT
+              value: PROD
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always

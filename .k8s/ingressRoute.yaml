@@ -1,0 +1,14 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: random-tvshow-app
+  namespace: nextjs
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Path(`/random`) || PathPrefix(`/_next`)
+      kind: Rule
+      services:
+        - name: random-tvshow-app
+          port: 80
