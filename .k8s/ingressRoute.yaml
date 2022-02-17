@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: Path(`/random`) || PathPrefix(`/_next`)
+    - match: Path(`/random`) || PathPrefix(`/_next`) || PathPrefix(`/api`)
       kind: Rule
       services:
         - name: random-tvshow-app
