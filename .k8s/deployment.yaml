@@ -18,7 +18,7 @@ spec:
         app: random-tvshow-app
     spec:
       containers:
-        - image: sundarsudandiraraj/random-tvshow-node-app:1.0.16
+        - image: sundarsudandiraraj/random-tvshow-node-app:1.0.18
           imagePullPolicy: IfNotPresent
           livenessProbe:
             failureThreshold: 3
