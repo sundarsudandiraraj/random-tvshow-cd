@@ -17,6 +17,18 @@ spec:
       labels:
         app: random-tvshow-app
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - random-tvshow-app
+              topologyKey: topology.kubernetes.io/zone
       containers:
         - image: sundarsudandiraraj/random-tvshow-node-app:1.0.18
           imagePullPolicy: IfNotPresent
@@ -54,18 +66,6 @@ spec:
             limit:
               cpu: 200m
               memory: 512Mi
-          affinity:
-            podAntiAffinity:
-              preferredDuringSchedulingIgnoredDuringExecution:
-              - weight: 100
-                podAffinityTerm:
-                  labelSelector:
-                    matchExpressions:
-                    - key: app
-                      operator: In
-                      values:
-                      - random-tvshow-app
-                  topologyKey: topology.kubernetes.io/zone
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
