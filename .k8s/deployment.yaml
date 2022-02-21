@@ -30,7 +30,7 @@ spec:
                   - random-tvshow-app
               topologyKey: topology.kubernetes.io/zone
       containers:
-        - image: sundarsudandiraraj/random-tvshow-node-app:1.0.18
+        - image: sundarsudandiraraj/random-tvshow-node-app:1.0.20
           imagePullPolicy: IfNotPresent
           livenessProbe:
             failureThreshold: 3
